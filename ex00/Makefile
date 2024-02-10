@@ -1,5 +1,5 @@
 # Name of your executable
-TARGET = Converter
+TARGET = easyfind
 
 # Compiler to use
 CXX = c++

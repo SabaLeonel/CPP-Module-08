@@ -7,7 +7,9 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -o3 -g
 
 # Source files
-SRC = main.cpp
+SRC = main.cpp \
+
+
 
 # Header files
 HDR = Array.hpp

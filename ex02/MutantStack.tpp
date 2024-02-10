@@ -1,79 +1,35 @@
-#include "Mutant.hpp"
+#ifndef MUTANTSTACK_HPP
+#define MUTANTSTACK_HPP
 
-template <class T>
-Array<T>::Array() : arr(nullptr), _number(0) 
+#include <iostream>
+#include <stack>
+template <typename T>
+class MutantStack : public std::stack<T>
 {
-    std::cout << "Default constructor Array created with 0" << std::endl;
-}
+public:
+	MutantStack() : std::stack<T>() {}
+	MutantStack(const MutantStack &other) : std::stack<T>(other) {}
+	MutantStack &operator=(const MutantStack &other)
+	{
+	    std::stack<T>::operator=(other);
+		return *this;
+	}
+	~MutantStack() {}
+    
+    typedef typename std::stack<T>::container_type::reverse_iterator reverse_iterator;
+    typedef typename std::stack<T>::container_type::const_reverse_iterator const_reverse_iterator;
+    typedef typename std::stack<T>::container_type::const_iterator const_iterator;
+	typedef typename std::stack<T>::container_type::iterator iterator;
+	
+    iterator begin() { return std::stack<T>::c.begin(); }
+	iterator end() { return std::stack<T>::c.end(); }
+	iterator begin() const { return std::stack<T>::c.begin(); }
+	iterator end() const { return std::stack<T>::c.end(); }
+	reverse_iterator rbegin() { return std::stack<T>::c.rbegin(); }
+	reverse_iterator rend() { return std::stack<T>::c.rend(); }
+	reverse_iterator rbegin() const { return std::stack<T>::c.rbegin(); }
+	reverse_iterator rend() const { return std::stack<T>::c.rend(); }
 
-template <class T>
-Array<T>::Array(unsigned int n) : arr(new T[n]), _number(n)
-{
-    std::cout << "Array created with " << n << std::endl;
-}
+};
 
-
-template <class T>
-Array<T>::Array(const Array &other) : arr(new T[other._number]), _number(other._number) 
-{
-    for (unsigned int i = 0; i < this->_number; i++) 
-        this->arr[i] = other.arr[i];
-}
-
-template <class T>
-Array<T> &Array<T>::operator=(const Array &rhs) 
-{
-    if (this != &rhs) 
-    {
-        if (this->arr)
-            delete[] this->arr;
-        this->_number = rhs._number;
-        this->arr = new T[rhs._number];
-        for (unsigned int i = 0; i < this->_number; i++) 
-            this->arr[i] = rhs.arr[i];
-    }
-    return *this;
-}
-
-template <class T>
-T &Array<T>::operator[](unsigned int i) 
-{
-    if (i >= this->_number || i < 0)
-        throw std::out_of_range("Index out of range");
-    return arr[i];
-}
-
-
-template <class T>
-const T &Array<T>::operator[](unsigned int i) const 
-{
-    if (i >= this->_number || i < 0)
-        throw std::out_of_range("Index out of range");
-    return arr[i];
-}
-
-template <class T>
-Array<T>::~Array(void) 
-{
-    std::cout << "Array destroyed" << std::endl;
-    delete[] this->arr;
-}
-
-template <class T>
-void Array<T>::printArray(void) 
-{
-    for (unsigned int i = 0; i < this->_number; i++) 
-        std::cout << this->arr[i] << std::endl;
-}
-
-template <class T>
-void Array<T>::setArray(T customfill) 
-{
-    for (unsigned int i = 0; i < this->_number; i++)
-        this->arr[i] = customfill;
-}
-
-template <class T>
-unsigned int Array<T>::size(void) {
-    return this->_number;
-}
+#endif
